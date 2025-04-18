@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
-import 'api_services.dart'; // Ensure this file exists and the path is correct
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart'; // Add this line againimport 'api_services.dart'; // Ensure this file exists and the path is correct
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'settings_page.dart'; // Ensure this file exists and the path is correct
 import 'history_page.dart'; // Ensure this file exists and the path is correct
+import 'api_services.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,13 +14,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  PersistentTabController _controller = PersistentTabController(initialIndex: 3); // Start on the AI tab
+  PersistentTabController _controller = PersistentTabController(
+      initialIndex: 3); // Start on the AI tab
 
   List<Widget> _buildScreens() {
     return [
-      Center(child: Text("Home Screen Content", style: TextStyle(color: Colors.black))), // Replace with your actual Home content
-      Center(child: Text("Search Screen Content", style: TextStyle(color: Colors.black))), // Replace with your actual Search content
-      Center(child: Icon(Icons.add_circle, size: 50, color: Colors.black)), // Replace with your actual Add content
+      Center(child: Text(
+          "Home Screen Content", style: TextStyle(color: Colors.black))),
+      // Replace with your actual Home content
+      Center(child: Text(
+          "Search Screen Content", style: TextStyle(color: Colors.black))),
+      // Replace with your actual Search content
+      Center(child: Icon(Icons.add_circle, size: 50, color: Colors.black)),
+      // Replace with your actual Add content
       // Your previous AI Assistant Tab (the content of _buildAiAssistantTab() from your previous HomeScreen)
       _buildAiAssistantTab(),
       SettingsPage(),
@@ -71,37 +77,44 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                _greeting, // Ensure _greeting is defined in this class or accessed appropriately
+                _greeting,
+                // Ensure _greeting is defined in this class or accessed appropriately
                 style: TextStyle(fontSize: 20, height: 1.5),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 40),
               ElevatedButton(
-                onPressed: _speech.isAvailable ? _startListening : null, // Ensure _speech and _startListening are defined or accessed
+                onPressed: _speech.isAvailable ? _startListening : null,
+                // Ensure _speech and _startListening are defined or accessed
                 style: ElevatedButton.styleFrom(
                   shape: CircleBorder(),
                   padding: EdgeInsets.all(30),
-                  backgroundColor: _isListening ? Colors.red : Colors.green, // Ensure _isListening is defined or accessed
+                  backgroundColor: _isListening ? Colors.red : Colors
+                      .green, // Ensure _isListening is defined or accessed
                 ),
                 child: Icon(
-                  _isListening ? Icons.mic_off : Icons.mic, // Ensure _isListening is defined or accessed
+                  _isListening ? Icons.mic_off : Icons.mic,
+                  // Ensure _isListening is defined or accessed
                   size: 50,
                   color: Colors.white,
                 ),
               ),
               SizedBox(height: 20),
-              if (_lastSpokenWords.isNotEmpty) // Ensure _lastSpokenWords is defined or accessed
+              if (_lastSpokenWords
+                  .isNotEmpty) // Ensure _lastSpokenWords is defined or accessed
                 Card(
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       children: [
                         Text(
-                          _currentLanguage == 'hi' ? 'आपने कहा:' : 'You said:', // Ensure _currentLanguage is defined or accessed
+                          _currentLanguage == 'hi' ? 'आपने कहा:' : 'You said:',
+                          // Ensure _currentLanguage is defined or accessed
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         SizedBox(height: 8),
-                        Text(_lastSpokenWords), // Ensure _lastSpokenWords is defined or accessed
+                        Text(_lastSpokenWords),
+                        // Ensure _lastSpokenWords is defined or accessed
                       ],
                     ),
                   ),
@@ -110,7 +123,8 @@ class _HomeScreenState extends State<HomeScreen> {
               Text(
                 _currentLanguage == 'hi'
                     ? 'या मैन्युअली एक्सप्लोर करें:'
-                    : 'Or explore manually:', // Ensure _currentLanguage is defined or accessed
+                    : 'Or explore manually:',
+                // Ensure _currentLanguage is defined or accessed
                 style: TextStyle(fontSize: 16),
               ),
               SizedBox(height: 20),
@@ -120,17 +134,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   _buildCategoryButton( // Ensure _buildCategoryButton is defined or accessed
                     icon: Icons.local_hospital,
-                    label: _currentLanguage == 'hi' ? 'स्वास्थ्य सेवा' : 'Healthcare', // Ensure _currentLanguage is defined or accessed
+                    label: _currentLanguage == 'hi'
+                        ? 'स्वास्थ्य सेवा'
+                        : 'Healthcare',
+                    // Ensure _currentLanguage is defined or accessed
                     category: 'Healthcare',
                   ),
                   _buildCategoryButton( // Ensure _buildCategoryButton is defined or accessed
                     icon: Icons.assignment,
-                    label: _currentLanguage == 'hi' ? 'सरकारी योजनाएं' : 'Govt. Schemes', // Ensure _currentLanguage is defined or accessed
+                    label: _currentLanguage == 'hi'
+                        ? 'सरकारी योजनाएं'
+                        : 'Govt. Schemes',
+                    // Ensure _currentLanguage is defined or accessed
                     category: 'Govt. Schemes',
                   ),
                   _buildCategoryButton( // Ensure _buildCategoryButton is defined or accessed
                     icon: Icons.cloud,
-                    label: _currentLanguage == 'hi' ? 'मौसम' : 'Weather', // Ensure _currentLanguage is defined or accessed
+                    label: _currentLanguage == 'hi' ? 'मौसम' : 'Weather',
+                    // Ensure _currentLanguage is defined or accessed
                     category: 'Weather',
                   ),
                 ],
@@ -150,7 +171,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text(
                     _currentLanguage == 'hi'
                         ? 'प्रोसेसिंग...'
-                        : 'Processing...', // Ensure _currentLanguage is defined or accessed
+                        : 'Processing...',
+                    // Ensure _currentLanguage is defined or accessed
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                 ],
@@ -167,7 +189,8 @@ class _HomeScreenState extends State<HomeScreen> {
     required String category,
   }) {
     return ElevatedButton(
-      onPressed: () => _navigateToResponse(category), // Ensure _navigateToResponse is defined or accessed
+      onPressed: () => _navigateToResponse(category),
+      // Ensure _navigateToResponse is defined or accessed
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         shape: RoundedRectangleBorder(
@@ -205,16 +228,19 @@ class _HomeScreenState extends State<HomeScreen> {
         break;
     }
 
-    _processVoiceInput(query); // Ensure _processVoiceInput is defined or accessed
+    _processVoiceInput(
+        query); // Ensure _processVoiceInput is defined or accessed
   }
 
   void _processVoiceInput(String query) async {
     if (query.isEmpty) return;
 
-    setState(() => _isProcessing = true); // Ensure _isProcessing is defined or accessed
+    setState(() =>
+    _isProcessing = true); // Ensure _isProcessing is defined or accessed
 
     try {
-      String response = await ApiServices.sendQueryToDialogflow(query, _currentLanguage); // Ensure ApiServices is imported
+      String response = await ApiServices.sendQueryToDialogflow(
+          query, _currentLanguage); // Ensure ApiServices is imported
 
       Navigator.pushNamed(
         context,
@@ -230,7 +256,8 @@ class _HomeScreenState extends State<HomeScreen> {
         SnackBar(content: Text('Error processing your request: $e')),
       );
     } finally {
-      setState(() => _isProcessing = false); // Ensure _isProcessing is defined or accessed
+      setState(() =>
+      _isProcessing = false); // Ensure _isProcessing is defined or accessed
     }
   }
 
@@ -321,28 +348,14 @@ class _HomeScreenState extends State<HomeScreen> {
       controller: _controller,
       screens: _buildScreens(),
       items: _navBarsItems(),
-      confineInSafeArea: true,
-      backgroundColor: Colors.white, // Default is Colors.white.
-      handleAndroidBackButtonPress: true, // Default is true.
-      resizeToAvoidBottomInset: true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
-      stateManagement: true, // Default is true.
-      hideNavigationBarWhenKeyboardShows: true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
-      decoration: const NavBarDecoration( // Added const here
+      backgroundColor: Colors.white,
+      handleAndroidBackButtonPress: true,
+      resizeToAvoidBottomInset: true,
+      stateManagement: true,
+      decoration: NavBarDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        colorBehindNavBar: Colors.white,
       ),
-      popAllScreensOnTapOfSelectedTab: true,
-      popActionScreens: PopActionScreensType.all,
-      itemAnimationProperties: const ItemAnimationProperties( // Added const here
-        duration: Duration(milliseconds: 200),
-        curve: Curves.ease,
-      ),
-      screenTransitionAnimation: const ScreenTransitionAnimation( // Added const here
-        animateTabTransition: true,
-        curve: Curves.ease,
-        duration: Duration(milliseconds: 200),
-      ),
-      navBarStyle: NavBarStyle.style1, // Choose the nav bar style with this property.
+      navBarStyle: NavBarStyle.style1,
     );
   }
 }

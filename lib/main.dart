@@ -13,6 +13,8 @@ import 'history_page.dart'; // Import for HistoryPage
 import 'text_to_speech_service.dart' as tts_service;
 import 'dart:io';
 import 'home_screen.dart';
+import 'ai_assistant_page.dart';
+import 'search_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,17 +26,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Your App Title',
-      home: HomeScreen(), // Use the new HomeScreen as the starting point
-      // OR, if you prefer using routes:
-      // initialRoute: '/home',
-      // routes: {
-      //   '/home': (context) => const HomeScreen(),
-      //   // ... other routes
-      // },
+      title: 'Smart Bharat AI',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: HomeScreen(), // <-- Entry point
+      routes: {
+        '/settings': (context) => SettingsPage(),
+        '/history': (context) => HistoryPage(),
+        '/search': (context) => SearchPage(),
+        '/assistant': (context) => const AIAssistantPage(),
+      },
     );
   }
 }
+
 
 // Helper class for checking internet connectivity
 class ConnectivityService {
